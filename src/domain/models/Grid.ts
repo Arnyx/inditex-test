@@ -1,10 +1,7 @@
-import type { Template } from "./Template";
-import type { Product } from "./Product";
-
 export interface GridRow {
   id: string;
-  template: Template;
-  products: Array<Product>;
+  templateId: string;
+  productIds: Array<string>;
 }
 
 export type Grid = Array<GridRow>;

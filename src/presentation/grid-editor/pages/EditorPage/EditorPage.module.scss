@@ -1,0 +1,9 @@
+.editor-page {
+  &__title {
+    margin: spacing(5) 0;
+  }
+
+  &__loader {
+    color: var(--mui-palette-grey-300);
+  }
+}

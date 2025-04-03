@@ -3,12 +3,54 @@
     "id": "1",
     "name": "Blue Jean",
     "price": 36.87,
-    "image": "https://fakeurl.com/img1.jpg"
+    "image": "/images/jeans.png"
   },
   {
     "id": "2",
-    "name": "White Shirt",
+    "name": "Sweater",
     "price": 24.99,
-    "image": "https://fakeurl.com/img2.jpg"
+    "image": "/images/sweater.png"
+  },
+  {
+    "id": "3",
+    "name": "Black Blazer",
+    "price": 24.99,
+    "image": "/images/blazer.png"
+  },
+  {
+    "id": "4",
+    "name": "Relaxed Fit Jean",
+    "price": 39.95,
+    "image": "/images/jeans.png"
+  },
+  {
+    "id": "5",
+    "name": "Slim Sweater",
+    "price": 29.99,
+    "image": "/images/sweater.png"
+  },
+  {
+    "id": "6",
+    "name": "Tailored Blazer",
+    "price": 49.99,
+    "image": "/images/blazer.png"
+  },
+  {
+    "id": "7",
+    "name": "Distressed Jeans",
+    "price": 41.5,
+    "image": "/images/jeans.png"
+  },
+  {
+    "id": "8",
+    "name": "Oversized Sweater",
+    "price": 31.75,
+    "image": "/images/sweater.png"
+  },
+  {
+    "id": "9",
+    "name": "Formal Black Blazer",
+    "price": 54.9,
+    "image": "/images/blazer.png"
   }
 ]

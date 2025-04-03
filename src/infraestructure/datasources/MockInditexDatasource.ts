@@ -8,15 +8,17 @@ import type { Product } from "@/domain/models/Product";
 import type { Template } from "@/domain/models/Template";
 
 export class MockInditexDatasource implements InditexDatasource {
-  async getProductsByIds(ids: string[]): Promise<Product[]> {
-    await new Promise((res) => setTimeout(res, 300));
-    const products = productsData.filter((p) => ids.includes(p.id));
+  async getProductsByIds(ids: Array<string> | null): Promise<Product[]> {
+    await new Promise((res) => setTimeout(res, 2000));
+    const products = ids
+      ? productsData.filter((p) => ids.includes(p.id))
+      : productsData;
 
     return ProductMapper.fromJson(products);
   }
 
   async getTemplates(): Promise<Template[]> {
-    await new Promise((res) => setTimeout(res, 300));
+    await new Promise((res) => setTimeout(res, 2000));
 
     return TemplateMapper.fromJson(templatesData);
   }

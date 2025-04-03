@@ -10,4 +10,12 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
     },
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@use "@/styles/core.scss" as *;`,
+        includePaths: [path.resolve(__dirname, "src/styles")],
+      },
+    },
+  },
 });

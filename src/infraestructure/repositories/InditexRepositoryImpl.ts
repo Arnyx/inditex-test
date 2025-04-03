@@ -7,7 +7,7 @@ import type { InditexRepository } from "@/domain/repositories/Inditex";
 export class InditexRepositoryImpl implements InditexRepository {
   constructor(private readonly datasource: InditexDatasource) {}
 
-  async getProductsByIds(ids: string[]): Promise<Product[]> {
+  async getProductsByIds(ids: Array<string> | null): Promise<Product[]> {
     return this.datasource.getProductsByIds(ids);
   }
 

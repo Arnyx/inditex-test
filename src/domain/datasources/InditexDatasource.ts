@@ -3,7 +3,7 @@ import type { Product } from "../models/Product";
 import type { Template } from "../models/Template";
 
 export interface InditexDatasource {
-  getProductsByIds: (ids: Array<string>) => Promise<Array<Product>>;
+  getProductsByIds: (ids: Array<string> | null) => Promise<Array<Product>>;
   getTemplates: () => Promise<Array<Template>>;
   saveGrid: (grid: Grid) => Promise<void>;
 }
