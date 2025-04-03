@@ -1,0 +1,14 @@
+[
+  {
+    "id": "1",
+    "name": "Blue Jean",
+    "price": 36.87,
+    "image": "https://fakeurl.com/img1.jpg"
+  },
+  {
+    "id": "2",
+    "name": "White Shirt",
+    "price": 24.99,
+    "image": "https://fakeurl.com/img2.jpg"
+  }
+]

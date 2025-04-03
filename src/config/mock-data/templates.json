@@ -1,0 +1,32 @@
+[
+  {
+    "id": "template_1",
+    "name": "Left Aligned",
+    "alignment": "LEFT"
+  },
+  {
+    "id": "template_2",
+    "name": "Centered",
+    "alignment": "CENTER"
+  },
+  {
+    "id": "template_3",
+    "name": "Right Aligned",
+    "alignment": "RIGHT"
+  },
+  {
+    "id": "template_4",
+    "name": "Minimal Left",
+    "alignment": "LEFT"
+  },
+  {
+    "id": "template_5",
+    "name": "Artistic Center",
+    "alignment": "CENTER"
+  },
+  {
+    "id": "template_6",
+    "name": "Visual Right",
+    "alignment": "RIGHT"
+  }
+]
