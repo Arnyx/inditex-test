@@ -1,11 +1,24 @@
-import { DndContext } from "@dnd-kit/core";
+import {
+  closestCenter,
+  DndContext,
+  DragOverlay,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  sortableKeyboardCoordinates,
+} from "@dnd-kit/sortable";
 import { Alert, Box, LinearProgress, Typography } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
-import { ProductRow } from "../../components/Product/Row/ProductRow";
+import { AddRowPlaceholder } from "../../components/Product/Row/AddRowPlaceholder";
 import { useGridEditor } from "../../hooks/useGridEditor";
 import { useProducts } from "../../hooks/useProducts";
 import styles from "./styles.module.scss";
-import { AddRowPlaceholder } from "../../components/Product/Row/AddRowPlaceholder";
+import { SortableProductRow } from "../../components/Product/Row/SortableProductRow";
+import { ProductCard } from "../../components/Product/Card";
 
 export const EditorPage = () => {
   const [params] = useSearchParams();
@@ -15,11 +28,21 @@ export const EditorPage = () => {
   const {
     rows,
     draggedRow,
+    draggedProduct,
+    overProductId,
+    handleDragOver,
     handleDragStart,
     handleDragEnd,
     handleAddRow,
     handleDeleteRow,
   } = useGridEditor(products);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
 
   return (
     <Box className={styles["editor-page"]}>
@@ -43,17 +66,32 @@ export const EditorPage = () => {
           )}
 
           <Box className={styles["editor-page__rows"]}>
-            <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-              {rows.map(({ id, products }) => (
-                <ProductRow
-                  key={id}
-                  id={id}
-                  products={products ?? []}
-                  draggedRow={draggedRow}
-                  handleDelete={handleDeleteRow}
-                />
-              ))}
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragOver={handleDragOver}
+              onDragStart={handleDragStart}
+              onDragEnd={handleDragEnd}
+            >
+              <SortableContext items={rows}>
+                {rows.map((row) => (
+                  <SortableProductRow
+                    key={row.id}
+                    row={row}
+                    draggedRow={draggedRow}
+                    overProductId={overProductId}
+                    handleDelete={handleDeleteRow}
+                  />
+                ))}
+              </SortableContext>
+
+              <DragOverlay>
+                {draggedProduct ? (
+                  <ProductCard product={draggedProduct} hasDragOverlay />
+                ) : null}
+              </DragOverlay>
             </DndContext>
+
             <AddRowPlaceholder onClick={handleAddRow} />
           </Box>
         </>

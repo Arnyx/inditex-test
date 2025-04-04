@@ -1,15 +1,24 @@
-import { Box, IconButton } from "@mui/material";
-import { Product } from "@/domain/models/Product";
-import { ProductCard } from "../../Card";
-import styles from "./styles.module.scss";
-import { useDroppable } from "@dnd-kit/core";
 import { MAX_PRODUCTS_ROW_LENGTH } from "@/config/constants";
+import { Product } from "@/domain/models/Product";
+import { useDroppable } from "@dnd-kit/core";
+import {
+  horizontalListSortingStrategy,
+  SortableContext,
+} from "@dnd-kit/sortable";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import { Box, IconButton } from "@mui/material";
+import styles from "./styles.module.scss";
+import { SortableProductCard } from "../SortableProductCard";
+import { ProductRow as ProductRowType } from "@/domain/models/ProductRow";
+import { HTMLAttributes } from "react";
+import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 
 type Props = {
   id: string;
   products: Array<Product>;
-  draggedRow: string | null;
+  draggedRow: ProductRowType | null;
+  overProductId: string | null;
+  dragHandleProps?: HTMLAttributes<HTMLElement>;
   handleDelete: (id: string) => void;
 };
 
@@ -17,10 +26,13 @@ export const ProductRow = ({
   id,
   products,
   draggedRow,
+  overProductId,
+  dragHandleProps,
   handleDelete,
 }: Props) => {
   const { isOver, setNodeRef } = useDroppable({ id });
-  const isSourceRow = draggedRow === id;
+
+  const isSourceRow = draggedRow?.id === id;
   const isBlocked = products.length === MAX_PRODUCTS_ROW_LENGTH;
   const isDraggingClass = draggedRow ? styles["row--dragging"] : "";
   const isActiveClass = isSourceRow ? styles["row--active"] : "";
@@ -29,23 +41,40 @@ export const ProductRow = ({
 
   return (
     <Box
-      ref={setNodeRef}
       className={`${styles.row} ${isDraggingClass} ${isOverClass} ${isBlockedClass} ${isActiveClass}`}
+      ref={setNodeRef}
     >
-      {!products.length && (
-        <Box className={styles.row__actions}>
+      <Box className={styles.row__actions}>
+        {!products.length && (
           <IconButton onClick={() => handleDelete(id)}>
             <DeleteOutlineIcon />
           </IconButton>
-        </Box>
-      )}
+        )}
+        <span {...dragHandleProps}>
+          <IconButton
+            className={styles.row__dragHandle}
+            disableRipple
+            disableFocusRipple
+          >
+            <DragIndicatorIcon fontSize="small" />
+          </IconButton>
+        </span>
+      </Box>
 
       <Box component="ul" className={styles.row__list}>
-        {products.map((product) => (
-          <Box component="li" key={product.id}>
-            <ProductCard product={product} />
-          </Box>
-        ))}
+        <SortableContext
+          items={products.map((p) => p.id)}
+          strategy={horizontalListSortingStrategy}
+        >
+          {products.map((product) => (
+            <Box component="li" key={product.id}>
+              <SortableProductCard
+                product={product}
+                isOver={overProductId === product.id}
+              />
+            </Box>
+          ))}
+        </SortableContext>
       </Box>
     </Box>
   );

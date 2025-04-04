@@ -6,24 +6,32 @@ import {
 import { chunkArray } from "@/utils";
 import type { Product } from "@/domain/models/Product";
 import type { ProductRow } from "@/domain/models/ProductRow";
-import type { DragEndEvent, DragStartEvent } from "@dnd-kit/core";
+import type {
+  DragEndEvent,
+  DragOverEvent,
+  DragStartEvent,
+} from "@dnd-kit/core";
+import { arrayMove } from "@dnd-kit/sortable";
 
 export const useGridEditor = (products: Product[] | undefined) => {
   const [rows, setRows] = useState<ProductRow[]>([]);
-  const [draggedRow, setDraggedRow] = useState<string | null>(null);
+  const [draggedRow, setDraggedRow] = useState<ProductRow | null>(null);
+  const [draggedProduct, setDraggedProduct] = useState<Product | null>(null);
+  const [overProductId, setOverProductId] = useState<string | null>(null);
   const lastRowId = useRef(0);
 
   useEffect(() => {
-    if (products) {
-      const chunked = chunkArray(products, MAX_PRODUCTS_ROW_LENGTH).map(
-        (group, index) => ({
-          id: `row-${index}`,
-          products: group,
-        })
-      );
-      lastRowId.current += chunked.length;
-      setRows(chunked);
-    }
+    if (!products) return;
+
+    const chunked = chunkArray(products, MAX_PRODUCTS_ROW_LENGTH).map(
+      (group, index) => ({
+        id: `row-${index}`,
+        products: group,
+      })
+    );
+
+    lastRowId.current += chunked.length;
+    setRows(chunked);
   }, [products]);
 
   const handleAddRow = () => {
@@ -39,42 +47,124 @@ export const useGridEditor = (products: Product[] | undefined) => {
     setRows((prevRows) => prevRows.filter((row) => row.id !== id));
   };
 
-  const isMoveBlocked = (sourceIndex: number, targetIndex: number) => {
-    const sourceLength = rows[sourceIndex].products.length;
-    const targetLength = rows[targetIndex].products.length;
-    return (
-      sourceLength === MIN_PRODUCTS_ROW_LENGTH ||
-      targetLength === MAX_PRODUCTS_ROW_LENGTH
-    );
+  const handleDragOver = ({ over }: DragOverEvent) => {
+    setOverProductId((over?.id as string) ?? null);
   };
 
   const handleDragStart = ({ active }: DragStartEvent) => {
-    const sourceRow = rows.find((row) =>
-      row.products.some((product) => product.id === active.id)
-    );
-    setDraggedRow(sourceRow?.id ?? null);
+    const sourceRow =
+      rows.find((row) =>
+        row.products.some((product) => product.id === active.id)
+      ) ?? null;
+    const product = sourceRow?.products.find((p) => p.id === active.id) ?? null;
+
+    setDraggedProduct(product);
+    setDraggedRow(sourceRow);
+  };
+
+  const findRowIndexByProductId = (productId: string): number =>
+    rows.findIndex((row) => row.products.some((p) => p.id === productId));
+
+  const findProductIndex = (row: ProductRow, productId: string): number =>
+    row.products.findIndex((p) => p.id === productId);
+
+  const isRowId = (id: string) => id.startsWith("row-");
+
+  const reorderRows = (activeRowId: string, overRowId: string) => {
+    const oldIndex = rows.findIndex((row) => row.id === activeRowId);
+    const newIndex = rows.findIndex((row) => row.id === overRowId);
+    if (oldIndex === -1 || newIndex === -1) return;
+
+    const reordered = arrayMove(rows, oldIndex, newIndex);
+    setRows(reordered);
   };
 
   const handleDragEnd = ({ active, over }: DragEndEvent) => {
     setDraggedRow(null);
+    setOverProductId(null);
 
     if (!over || active.id === over.id) return;
 
-    const sourceIndex = rows.findIndex((row) =>
-      row.products.some((product) => product.id === active.id)
-    );
-    const targetIndex = rows.findIndex((row) => row.id === over.id);
+    const activeId = active.id as string;
+    const overId = over.id as string;
 
-    if (isMoveBlocked(sourceIndex, targetIndex)) return;
+    // Moving rows
+    if (isRowId(activeId) && isRowId(overId)) {
+      reorderRows(activeId, overId);
+      return;
+    }
 
-    const product = rows[sourceIndex].products.find((p) => p.id === active.id);
-    if (!product) return;
+    // Moving products
+    const sourceRowIndex = findRowIndexByProductId(activeId);
+    const targetRowIndex = isRowId(overId)
+      ? rows.findIndex((row) => row.id === overId)
+      : findRowIndexByProductId(overId);
+
+    if (sourceRowIndex === -1 || targetRowIndex === -1) return;
+
+    if (sourceRowIndex === targetRowIndex) {
+      reorderWithinRow(sourceRowIndex, activeId, overId);
+    } else {
+      moveBetweenRows(sourceRowIndex, targetRowIndex, activeId, overId);
+    }
+  };
+
+  const reorderWithinRow = (rowIndex: number, fromId: string, toId: string) => {
+    const row = rows[rowIndex];
+    const fromIndex = findProductIndex(row, fromId);
+    const toIndex = findProductIndex(row, toId);
+
+    if (fromIndex === -1 || toIndex === -1) return;
 
     const updatedRows = [...rows];
-    updatedRows[sourceIndex].products = updatedRows[
-      sourceIndex
-    ].products.filter((product) => product.id !== active.id);
-    updatedRows[targetIndex].products.push(product);
+    updatedRows[rowIndex] = {
+      ...row,
+      products: arrayMove(row.products, fromIndex, toIndex),
+    };
+
+    setRows(updatedRows);
+  };
+
+  const moveBetweenRows = (
+    sourceRowIndex: number,
+    targetRowIndex: number,
+    fromId: string,
+    toId: string
+  ) => {
+    const sourceRow = rows[sourceRowIndex];
+    const targetRow = rows[targetRowIndex];
+
+    const fromIndex = findProductIndex(sourceRow, fromId);
+
+    const isTargetRow = isRowId(toId);
+    const toIndex = isTargetRow
+      ? targetRow.products.length
+      : findProductIndex(targetRow, toId);
+
+    if (
+      fromIndex === -1 ||
+      toIndex === -1 ||
+      sourceRow.products.length === MIN_PRODUCTS_ROW_LENGTH ||
+      targetRow.products.length === MAX_PRODUCTS_ROW_LENGTH
+    ) {
+      return;
+    }
+
+    const product = sourceRow.products[fromIndex];
+    const updatedRows = [...rows];
+
+    updatedRows[sourceRowIndex] = {
+      ...sourceRow,
+      products: sourceRow.products.filter((_, i) => i !== fromIndex),
+    };
+
+    const updatedTargetProducts = [...targetRow.products];
+    updatedTargetProducts.splice(toIndex, 0, product);
+
+    updatedRows[targetRowIndex] = {
+      ...targetRow,
+      products: updatedTargetProducts,
+    };
 
     setRows(updatedRows);
   };
@@ -82,6 +172,9 @@ export const useGridEditor = (products: Product[] | undefined) => {
   return {
     rows,
     draggedRow,
+    draggedProduct,
+    overProductId,
+    handleDragOver,
     handleDragStart,
     handleDragEnd,
     handleAddRow,

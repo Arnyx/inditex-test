@@ -8,6 +8,10 @@
   position: relative;
   z-index: 2;
 
+  &--overlay {
+    opacity: 0.5;
+  }
+
   &__image {
     object-fit: contain;
     width: 100%;
