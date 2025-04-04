@@ -1,25 +1,18 @@
-import { Alert, Typography, Box, LinearProgress } from "@mui/material";
-import { useProducts } from "../../hooks/useProducts";
+import { DndContext } from "@dnd-kit/core";
+import { Alert, Box, LinearProgress, Typography } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
 import { ProductRow } from "../../components/Product/Row";
-import { chunkArray } from "@/utils";
-import { PRODUCTS_ROW_COUNT } from "@/config/constants";
-import { useEffect, useState } from "react";
+import { useGridEditor } from "../../hooks/useGridEditor";
+import { useProducts } from "../../hooks/useProducts";
 import styles from "./EditorPage.module.scss";
 
 export const EditorPage = () => {
   const [params] = useSearchParams();
   const productIds = params.get("products")?.split(",") ?? null;
-
   const { data: products, isLoading } = useProducts(productIds);
-  const [rows, setRows] = useState<Array<typeof products>>([]);
 
-  useEffect(() => {
-    if (products) {
-      const chunked = chunkArray(products, PRODUCTS_ROW_COUNT);
-      setRows(chunked);
-    }
-  }, [products]);
+  const { rows, draggedRow, handleDragStart, handleDragEnd } =
+    useGridEditor(products);
 
   return (
     <>
@@ -34,16 +27,26 @@ export const EditorPage = () => {
         />
       ) : (
         <>
-          <Alert severity="info" sx={{ mb: 2 }}>
-            No product IDs were specified in the URL. All products have been
-            loaded. You can provide specific ones by adding{" "}
-            <strong>?products=1,2,3</strong> to the URL.
-          </Alert>
-          {rows.map((productRow, index) => (
-            <Box key={`row-${index}`} sx={{ mb: 3 }}>
-              <ProductRow products={productRow ?? []} />
-            </Box>
-          ))}
+          {!productIds && (
+            <Alert severity="info" sx={{ mb: 2 }}>
+              No product IDs were specified in the URL. All products have been
+              loaded. You can provide specific ones by adding{" "}
+              <strong>?products=1,2,3</strong> to the URL.
+            </Alert>
+          )}
+
+          <Box className={styles["editor-page__rows"]}>
+            <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+              {rows.map(({ id, products }) => (
+                <ProductRow
+                  key={id}
+                  id={id}
+                  products={products ?? []}
+                  draggedRow={draggedRow}
+                />
+              ))}
+            </DndContext>
+          </Box>
         </>
       )}
     </>

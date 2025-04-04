@@ -15,7 +15,7 @@
     "id": "3",
     "name": "Black Blazer",
     "price": 24.99,
-    "image": "/images/blazer.png"
+    "image": "/images/sweater.png"
   },
   {
     "id": "4",
@@ -33,7 +33,7 @@
     "id": "6",
     "name": "Tailored Blazer",
     "price": 49.99,
-    "image": "/images/blazer.png"
+    "image": "/images/sweater.png"
   },
   {
     "id": "7",
@@ -46,11 +46,5 @@
     "name": "Oversized Sweater",
     "price": 31.75,
     "image": "/images/sweater.png"
-  },
-  {
-    "id": "9",
-    "name": "Formal Black Blazer",
-    "price": 54.9,
-    "image": "/images/blazer.png"
   }
 ]

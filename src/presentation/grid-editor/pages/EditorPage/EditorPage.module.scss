@@ -6,4 +6,10 @@
   &__loader {
     color: var(--mui-palette-grey-300);
   }
+
+  &__rows {
+    display: flex;
+    flex-direction: column;
+    gap: spacing(2);
+  }
 }

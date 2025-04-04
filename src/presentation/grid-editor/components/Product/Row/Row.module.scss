@@ -1,0 +1,26 @@
+.row {
+  background: var(--mui-palette-grey-100);
+  padding: spacing(2);
+  border-radius: var(--mui-shape-borderRadius);
+
+  &--dragging:not(&--active).row--blocked {
+    opacity: 0.5;
+    cursor: no-drop;
+  }
+
+  &--over {
+    cursor: pointer;
+  }
+
+  &--over:not(&--blocked):not(&--active) {
+    background: var(--mui-palette-grey-300);
+  }
+
+  &__list {
+    display: flex;
+    gap: spacing(2);
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+}
