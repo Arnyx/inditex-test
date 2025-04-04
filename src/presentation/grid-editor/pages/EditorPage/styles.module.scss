@@ -1,6 +1,8 @@
 .editor-page {
+  margin: spacing(5) 0;
+
   &__title {
-    margin: spacing(5) 0;
+    margin-bottom: spacing(5);
   }
 
   &__loader {

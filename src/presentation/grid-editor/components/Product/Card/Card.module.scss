@@ -1,15 +1,17 @@
 .card {
   @include fadein;
-  width: 200px;
-  height: 300px;
+  width: $product-card-width;
+  height: $product-card-height;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
+  z-index: 2;
 
   &__image {
     object-fit: contain;
     width: 100%;
-    height: 200px;
+    height: $product-image-height;
   }
 
   &__content {

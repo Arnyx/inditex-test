@@ -26,6 +26,19 @@ export const useGridEditor = (products: Product[] | undefined) => {
     }
   }, [products]);
 
+  const handleAddRow = () => {
+    const newRow = {
+      id: `row-${lastRowId.current}`,
+      products: [],
+    };
+    setRows((prevRows) => [...prevRows, newRow]);
+    lastRowId.current += 1;
+  };
+
+  const handleDeleteRow = (id: string) => {
+    setRows((prevRows) => prevRows.filter((row) => row.id !== id));
+  };
+
   const isMoveBlocked = (sourceIndex: number, targetIndex: number) => {
     const sourceLength = rows[sourceIndex].products.length;
     const targetLength = rows[targetIndex].products.length;
@@ -71,5 +84,7 @@ export const useGridEditor = (products: Product[] | undefined) => {
     draggedRow,
     handleDragStart,
     handleDragEnd,
+    handleAddRow,
+    handleDeleteRow,
   };
 };
