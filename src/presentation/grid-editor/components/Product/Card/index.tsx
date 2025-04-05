@@ -5,16 +5,23 @@ import styles from "./Card.module.scss";
 type Props = {
   product: Product;
   hasDragOverlay?: boolean;
+  currentZoom: number;
 };
 
-export const ProductCard = ({ product, hasDragOverlay }: Props) => {
+export const ProductCard = ({
+  product,
+  hasDragOverlay,
+  currentZoom,
+}: Props) => {
   const overlayClassName = hasDragOverlay
     ? styles["card--overlay"]
     : styles.card;
+  const smallZoomClassName =
+    currentZoom < 0.5 ? styles["card--small-zoom"] : styles.card;
 
   return (
     <Card
-      className={`${styles.card} ${overlayClassName}`}
+      className={`${styles.card} ${overlayClassName} ${smallZoomClassName}`}
       elevation={0}
       variant="outlined"
     >
@@ -25,8 +32,10 @@ export const ProductCard = ({ product, hasDragOverlay }: Props) => {
         className={styles.card__image}
       />
       <CardContent className={styles.card__content}>
-        <Typography>{product.name}</Typography>
-        <Typography>{product.price.toFixed(2)} EUR</Typography>
+        <Typography className={styles.card__name}>{product.name}</Typography>
+        <Typography className={styles.card__price}>
+          {product.price.toFixed(2)} EUR
+        </Typography>
       </CardContent>
     </Card>
   );

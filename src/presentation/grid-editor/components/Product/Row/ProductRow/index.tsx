@@ -19,6 +19,7 @@ type Props = {
   draggedRow: ProductRowType | null;
   overProductId: string | null;
   dragHandleProps?: HTMLAttributes<HTMLElement>;
+  currentZoom: number;
   handleDelete: (id: string) => void;
 };
 
@@ -28,6 +29,7 @@ export const ProductRow = ({
   draggedRow,
   overProductId,
   dragHandleProps,
+  currentZoom,
   handleDelete,
 }: Props) => {
   const { isOver, setNodeRef } = useDroppable({ id });
@@ -46,13 +48,16 @@ export const ProductRow = ({
     >
       <Box className={styles.row__actions}>
         {!products.length && (
-          <IconButton onClick={() => handleDelete(id)}>
+          <IconButton
+            className={styles.row__button}
+            onClick={() => handleDelete(id)}
+          >
             <DeleteOutlineIcon />
           </IconButton>
         )}
         <span {...dragHandleProps}>
           <IconButton
-            className={styles.row__dragHandle}
+            className={styles.row__button}
             disableRipple
             disableFocusRipple
           >
@@ -71,6 +76,7 @@ export const ProductRow = ({
               <SortableProductCard
                 product={product}
                 isOver={overProductId === product.id}
+                currentZoom={currentZoom}
               />
             </Box>
           ))}

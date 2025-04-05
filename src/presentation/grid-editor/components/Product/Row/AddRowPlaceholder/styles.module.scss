@@ -1,5 +1,5 @@
 .placeholder {
-  height: calc(spacing(2) * 2 + $product-card-height);
+  height: calc(spacing(2) * 2 + $product-card-height * var(--zoom-factor));
   border-radius: var(--mui-shape-borderRadius);
   display: flex;
   align-items: center;
@@ -10,7 +10,7 @@
   gap: spacing(2);
 
   & &__icon {
-    font-size: 5rem;
+    font-size: calc(5rem * var(--zoom-factor));
   }
 
   &__text {

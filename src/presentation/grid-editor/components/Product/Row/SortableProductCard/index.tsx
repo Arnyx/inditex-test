@@ -6,9 +6,14 @@ import { ProductCard } from "../../Card";
 type Props = {
   product: Product;
   isOver: boolean;
+  currentZoom: number;
 };
 
-export const SortableProductCard = ({ product, isOver }: Props) => {
+export const SortableProductCard = ({
+  product,
+  isOver,
+  currentZoom,
+}: Props) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: product.id });
 
@@ -21,7 +26,7 @@ export const SortableProductCard = ({ product, isOver }: Props) => {
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <ProductCard product={product} />
+      <ProductCard product={product} currentZoom={currentZoom} />
     </div>
   );
 };

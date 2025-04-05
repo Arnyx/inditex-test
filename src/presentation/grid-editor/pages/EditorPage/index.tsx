@@ -19,6 +19,8 @@ import { useProducts } from "../../hooks/useProducts";
 import styles from "./styles.module.scss";
 import { SortableProductRow } from "../../components/Product/Row/SortableProductRow";
 import { ProductCard } from "../../components/Product/Card";
+import { GridEditorActions } from "../../components/Actions";
+import { useZoom } from "../../hooks/useZoom";
 
 export const EditorPage = () => {
   const [params] = useSearchParams();
@@ -36,6 +38,15 @@ export const EditorPage = () => {
     handleAddRow,
     handleDeleteRow,
   } = useGridEditor(products);
+
+  const {
+    currentZoom,
+    isMinZoom,
+    isMaxZoom,
+    handleZoomIn,
+    handleZoomOut,
+    handleResetZoom,
+  } = useZoom();
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -65,35 +76,53 @@ export const EditorPage = () => {
             </Alert>
           )}
 
-          <Box className={styles["editor-page__rows"]}>
-            <DndContext
-              sensors={sensors}
-              collisionDetection={closestCenter}
-              onDragOver={handleDragOver}
-              onDragStart={handleDragStart}
-              onDragEnd={handleDragEnd}
+          <Box className={styles["editor-page__body"]}>
+            <Box
+              className={styles["editor-page__rows"]}
+              style={{ "--zoom-factor": currentZoom } as React.CSSProperties}
             >
-              <SortableContext items={rows}>
-                {rows.map((row) => (
-                  <SortableProductRow
-                    key={row.id}
-                    row={row}
-                    draggedRow={draggedRow}
-                    overProductId={overProductId}
-                    handleDelete={handleDeleteRow}
-                  />
-                ))}
-              </SortableContext>
+              <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragOver={handleDragOver}
+                onDragStart={handleDragStart}
+                onDragEnd={handleDragEnd}
+              >
+                <SortableContext items={rows}>
+                  {rows.map((row) => (
+                    <SortableProductRow
+                      key={row.id}
+                      row={row}
+                      draggedRow={draggedRow}
+                      overProductId={overProductId}
+                      currentZoom={currentZoom}
+                      handleDelete={handleDeleteRow}
+                    />
+                  ))}
+                </SortableContext>
 
-              <DragOverlay>
-                {draggedProduct ? (
-                  <ProductCard product={draggedProduct} hasDragOverlay />
-                ) : null}
-              </DragOverlay>
-            </DndContext>
+                <DragOverlay>
+                  {draggedProduct ? (
+                    <ProductCard
+                      product={draggedProduct}
+                      hasDragOverlay
+                      currentZoom={currentZoom}
+                    />
+                  ) : null}
+                </DragOverlay>
+              </DndContext>
 
-            <AddRowPlaceholder onClick={handleAddRow} />
+              <AddRowPlaceholder onClick={handleAddRow} />
+            </Box>
           </Box>
+
+          <GridEditorActions
+            isMinZoom={isMinZoom}
+            isMaxZoom={isMaxZoom}
+            onZoomIn={handleZoomIn}
+            onZoomOut={handleZoomOut}
+            onReset={handleResetZoom}
+          />
         </>
       )}
     </Box>

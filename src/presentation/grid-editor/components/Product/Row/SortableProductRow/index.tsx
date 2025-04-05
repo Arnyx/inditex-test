@@ -8,6 +8,7 @@ type Props = {
   row: ProductRowType;
   draggedRow: ProductRowType | null;
   overProductId: string | null;
+  currentZoom: number;
   handleDelete: (id: string) => void;
 };
 
@@ -15,6 +16,7 @@ export const SortableProductRow = ({
   row,
   draggedRow,
   overProductId,
+  currentZoom,
   handleDelete,
 }: Props) => {
   const { setNodeRef, attributes, listeners, transform, transition } =
@@ -33,6 +35,7 @@ export const SortableProductRow = ({
         draggedRow={draggedRow}
         overProductId={overProductId}
         dragHandleProps={{ ...attributes, ...listeners }}
+        currentZoom={currentZoom}
         handleDelete={handleDelete}
       />
     </div>
