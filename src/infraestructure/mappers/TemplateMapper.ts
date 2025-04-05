@@ -4,7 +4,7 @@ import type { TemplateDTO } from "../dtos/TemplateDTO";
 
 export class TemplateMapper {
   static toDomain(dto: TemplateDTO): Template {
-    if (!this.isValidAlignment(dto.alignment)) {
+    if (!TemplateMapper.isValidAlignment(dto.alignment)) {
       throw new Error(`Invalid alignment: ${dto.alignment}`);
     }
 
@@ -16,7 +16,7 @@ export class TemplateMapper {
   }
 
   static fromJson(json: Array<TemplateDTO>): Array<Template> {
-    return json.map(this.toDomain);
+    return json.map((dto) => TemplateMapper.toDomain(dto));
   }
 
   private static isValidAlignment(value: unknown): value is TemplateAlignment {

@@ -1,7 +1,3 @@
-export interface GridRow {
-  id: string;
-  templateId: string;
-  productIds: Array<string>;
-}
+import type { ProductRow } from "./ProductRow";
 
-export type Grid = Array<GridRow>;
+export type Grid = Array<ProductRow>;

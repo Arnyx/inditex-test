@@ -21,11 +21,13 @@ import { SortableProductRow } from "../../components/Product/Row/SortableProduct
 import { ProductCard } from "../../components/Product/Card";
 import { GridEditorActions } from "../../components/Actions";
 import { useZoom } from "../../hooks/useZoom";
+import { useTemplates } from "../../hooks/useTemplates";
 
 export const EditorPage = () => {
   const [params] = useSearchParams();
   const productIds = params.get("products")?.split(",") ?? null;
   const { data: products, isLoading } = useProducts(productIds);
+  const { data: templates } = useTemplates();
 
   const {
     rows,
@@ -37,6 +39,7 @@ export const EditorPage = () => {
     handleDragEnd,
     handleAddRow,
     handleDeleteRow,
+    handleTemplateChange,
   } = useGridEditor(products);
 
   const {
@@ -96,7 +99,9 @@ export const EditorPage = () => {
                       draggedRow={draggedRow}
                       overProductId={overProductId}
                       currentZoom={currentZoom}
-                      handleDelete={handleDeleteRow}
+                      templates={templates}
+                      onDelete={handleDeleteRow}
+                      onTemplateChange={handleTemplateChange}
                     />
                   ))}
                 </SortableContext>

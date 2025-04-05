@@ -5,7 +5,8 @@
   height: calc($product-card-height * var(--zoom-factor));
   box-sizing: content-box;
   position: relative;
-  cursor: move;
+  display: flex;
+  justify-content: flex-start;
 
   &--dragging:not(&--active).row--blocked {
     opacity: 0.5;
@@ -18,21 +19,6 @@
 
   &--over:not(&--blocked):not(&--active) {
     background: var(--mui-palette-grey-300);
-  }
-
-  &__actions {
-    position: absolute;
-    top: 0;
-    right: 0;
-    display: flex;
-    gap: spacing(1);
-    padding: spacing(1);
-  }
-
-  & &__button {
-    background-color: var(--mui-palette-common-white);
-    border: 1px solid var(--mui-palette-grey-200);
-    z-index: 3;
   }
 
   &__list {

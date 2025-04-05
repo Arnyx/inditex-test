@@ -11,7 +11,7 @@ export class ProductMapper {
     };
   }
 
-  static fromJson(dtos: ProductDTO[]): Product[] {
-    return dtos.map(this.toDomain);
+  static fromJson(json: Array<ProductDTO>): Array<Product> {
+    return json.map((dto) => ProductMapper.toDomain(dto));
   }
 }

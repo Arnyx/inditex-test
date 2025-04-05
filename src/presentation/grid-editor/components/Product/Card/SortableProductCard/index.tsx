@@ -1,7 +1,7 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import type { Product } from "@/domain/models/Product";
-import { ProductCard } from "../../Card";
+import { ProductCard } from "..";
 
 type Props = {
   product: Product;

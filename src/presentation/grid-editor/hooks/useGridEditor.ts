@@ -5,17 +5,17 @@ import {
 } from "@/config/constants";
 import { chunkArray } from "@/utils";
 import type { Product } from "@/domain/models/Product";
-import type { ProductRow } from "@/domain/models/ProductRow";
 import type {
   DragEndEvent,
   DragOverEvent,
   DragStartEvent,
 } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
+import { DraftProductRow } from "../models/DraftProductRow";
 
-export const useGridEditor = (products: Product[] | undefined) => {
-  const [rows, setRows] = useState<ProductRow[]>([]);
-  const [draggedRow, setDraggedRow] = useState<ProductRow | null>(null);
+export const useGridEditor = (products: Array<Product> | undefined) => {
+  const [rows, setRows] = useState<Array<DraftProductRow>>([]);
+  const [draggedRow, setDraggedRow] = useState<DraftProductRow | null>(null);
   const [draggedProduct, setDraggedProduct] = useState<Product | null>(null);
   const [overProductId, setOverProductId] = useState<string | null>(null);
   const lastRowId = useRef(0);
@@ -65,7 +65,7 @@ export const useGridEditor = (products: Product[] | undefined) => {
   const findRowIndexByProductId = (productId: string): number =>
     rows.findIndex((row) => row.products.some((p) => p.id === productId));
 
-  const findProductIndex = (row: ProductRow, productId: string): number =>
+  const findProductIndex = (row: DraftProductRow, productId: string): number =>
     row.products.findIndex((p) => p.id === productId);
 
   const isRowId = (id: string) => id.startsWith("row-");
@@ -169,6 +169,15 @@ export const useGridEditor = (products: Product[] | undefined) => {
     setRows(updatedRows);
   };
 
+  const handleTemplateChange = (rowId: string, templateId: string) => {
+    const index = rows.findIndex((row) => row.id === rowId);
+    if (index === -1) return;
+
+    setRows((prevRows) =>
+      prevRows.map((row, i) => (i === index ? { ...row, templateId } : row))
+    );
+  };
+
   return {
     rows,
     draggedRow,
@@ -179,5 +188,6 @@ export const useGridEditor = (products: Product[] | undefined) => {
     handleDragEnd,
     handleAddRow,
     handleDeleteRow,
+    handleTemplateChange,
   };
 };

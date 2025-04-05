@@ -1,70 +1,63 @@
-import { MAX_PRODUCTS_ROW_LENGTH } from "@/config/constants";
-import { Product } from "@/domain/models/Product";
+import { Template } from "@/domain/models/Template";
+import { DraftProductRow } from "@/presentation/grid-editor/models/DraftProductRow";
 import { useDroppable } from "@dnd-kit/core";
 import {
   horizontalListSortingStrategy,
   SortableContext,
 } from "@dnd-kit/sortable";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { Box, IconButton } from "@mui/material";
+import { Box } from "@mui/material";
+import { HTMLAttributes, useMemo } from "react";
+import { SortableProductCard } from "../../Card/SortableProductCard";
+import { ProductRowActions } from "./Actions";
+import { useProductRowStyles } from "./hooks/useProductRowStyles";
 import styles from "./styles.module.scss";
-import { SortableProductCard } from "../SortableProductCard";
-import { ProductRow as ProductRowType } from "@/domain/models/ProductRow";
-import { HTMLAttributes } from "react";
-import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 
 type Props = {
-  id: string;
-  products: Array<Product>;
-  draggedRow: ProductRowType | null;
+  row: DraftProductRow;
+  draggedRow: DraftProductRow | null;
   overProductId: string | null;
   dragHandleProps?: HTMLAttributes<HTMLElement>;
   currentZoom: number;
-  handleDelete: (id: string) => void;
+  templates?: Array<Template>;
+  onDelete: (id: string) => void;
+  onTemplateChange: (rowId: string, templateId: string) => void;
 };
 
 export const ProductRow = ({
-  id,
-  products,
+  row: { id, products, templateId },
   draggedRow,
   overProductId,
   dragHandleProps,
   currentZoom,
-  handleDelete,
+  templates,
+  onDelete,
+  onTemplateChange,
 }: Props) => {
   const { isOver, setNodeRef } = useDroppable({ id });
 
-  const isSourceRow = draggedRow?.id === id;
-  const isBlocked = products.length === MAX_PRODUCTS_ROW_LENGTH;
-  const isDraggingClass = draggedRow ? styles["row--dragging"] : "";
-  const isActiveClass = isSourceRow ? styles["row--active"] : "";
-  const isOverClass = isOver ? styles["row--over"] : "";
-  const isBlockedClass = isBlocked ? styles["row--blocked"] : "";
+  const selectedTemplate = useMemo(() => {
+    return templates?.find((template) => template.id === templateId);
+  }, [templates, templateId]);
+
+  const { justifyContent, classNames } = useProductRowStyles({
+    draggedRow,
+    rowId: id,
+    products,
+    isOver,
+    selectedTemplate,
+  });
 
   return (
-    <Box
-      className={`${styles.row} ${isDraggingClass} ${isOverClass} ${isBlockedClass} ${isActiveClass}`}
-      ref={setNodeRef}
-    >
-      <Box className={styles.row__actions}>
-        {!products.length && (
-          <IconButton
-            className={styles.row__button}
-            onClick={() => handleDelete(id)}
-          >
-            <DeleteOutlineIcon />
-          </IconButton>
-        )}
-        <span {...dragHandleProps}>
-          <IconButton
-            className={styles.row__button}
-            disableRipple
-            disableFocusRipple
-          >
-            <DragIndicatorIcon fontSize="small" />
-          </IconButton>
-        </span>
-      </Box>
+    <Box style={{ justifyContent }} className={classNames} ref={setNodeRef}>
+      <ProductRowActions
+        id={id}
+        selectedTemplateId={templateId}
+        showDeleteButton={!products.length}
+        dragHandleProps={dragHandleProps}
+        templates={templates}
+        onDelete={onDelete}
+        onTemplateChange={onTemplateChange}
+      />
 
       <Box component="ul" className={styles.row__list}>
         <SortableContext

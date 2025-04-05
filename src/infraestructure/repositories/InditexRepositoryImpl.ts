@@ -7,11 +7,11 @@ import type { InditexRepository } from "@/domain/repositories/Inditex";
 export class InditexRepositoryImpl implements InditexRepository {
   constructor(private readonly datasource: InditexDatasource) {}
 
-  async getProductsByIds(ids: Array<string> | null): Promise<Product[]> {
+  async getProductsByIds(ids: Array<string> | null): Promise<Array<Product>> {
     return this.datasource.getProductsByIds(ids);
   }
 
-  async getTemplates(): Promise<Template[]> {
+  async getTemplates(): Promise<Array<Template>> {
     return this.datasource.getTemplates();
   }
 

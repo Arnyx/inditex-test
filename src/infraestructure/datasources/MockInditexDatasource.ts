@@ -8,7 +8,7 @@ import type { Product } from "@/domain/models/Product";
 import type { Template } from "@/domain/models/Template";
 
 export class MockInditexDatasource implements InditexDatasource {
-  async getProductsByIds(ids: Array<string> | null): Promise<Product[]> {
+  async getProductsByIds(ids: Array<string> | null): Promise<Array<Product>> {
     await new Promise((res) => setTimeout(res, 2000));
     const products = ids
       ? productsData.filter((p) => ids.includes(p.id))
@@ -17,9 +17,7 @@ export class MockInditexDatasource implements InditexDatasource {
     return ProductMapper.fromJson(products);
   }
 
-  async getTemplates(): Promise<Template[]> {
-    await new Promise((res) => setTimeout(res, 2000));
-
+  async getTemplates(): Promise<Array<Template>> {
     return TemplateMapper.fromJson(templatesData);
   }
 

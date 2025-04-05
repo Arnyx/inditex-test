@@ -5,7 +5,7 @@ import { createInditexRepository } from "@/infraestructure/factories/inditexRepo
 const repository = createInditexRepository();
 
 export const useProducts = (ids: Array<string> | null) => {
-  return useQuery<Product[]>({
+  return useQuery<Array<Product>>({
     queryKey: ["products", ids],
     queryFn: () => repository.getProductsByIds(ids),
   });

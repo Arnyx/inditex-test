@@ -1,15 +1,18 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { ProductRow } from "../ProductRow";
-import { ProductRow as ProductRowType } from "@/domain/models/ProductRow";
 import styles from "./styles.module.scss";
+import type { Template } from "@/domain/models/Template";
+import type { DraftProductRow } from "@/presentation/grid-editor/models/DraftProductRow";
 
 type Props = {
-  row: ProductRowType;
-  draggedRow: ProductRowType | null;
+  row: DraftProductRow;
+  draggedRow: DraftProductRow | null;
   overProductId: string | null;
   currentZoom: number;
-  handleDelete: (id: string) => void;
+  templates?: Array<Template>;
+  onDelete: (id: string) => void;
+  onTemplateChange: (rowId: string, templateId: string) => void;
 };
 
 export const SortableProductRow = ({
@@ -17,7 +20,9 @@ export const SortableProductRow = ({
   draggedRow,
   overProductId,
   currentZoom,
-  handleDelete,
+  templates,
+  onDelete,
+  onTemplateChange,
 }: Props) => {
   const { setNodeRef, attributes, listeners, transform, transition } =
     useSortable({ id: row.id });
@@ -30,13 +35,14 @@ export const SortableProductRow = ({
   return (
     <div ref={setNodeRef} style={style} className={styles["sortable-row"]}>
       <ProductRow
-        id={row.id}
-        products={row.products}
+        row={row}
         draggedRow={draggedRow}
         overProductId={overProductId}
         dragHandleProps={{ ...attributes, ...listeners }}
         currentZoom={currentZoom}
-        handleDelete={handleDelete}
+        templates={templates}
+        onDelete={onDelete}
+        onTemplateChange={onTemplateChange}
       />
     </div>
   );
