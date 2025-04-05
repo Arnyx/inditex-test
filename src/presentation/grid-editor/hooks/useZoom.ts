@@ -1,9 +1,6 @@
+import { MAX_ZOOM, ZOOM_STEP, MIN_ZOOM } from "@/config/constants";
 import { roundDecimals } from "@/utils";
 import { useState } from "react";
-
-const MIN_ZOOM = 0.2;
-const MAX_ZOOM = 1;
-const ZOOM_STEP = 0.1;
 
 export const useZoom = () => {
   const [currentZoom, setCurrentZoom] = useState(MAX_ZOOM);
