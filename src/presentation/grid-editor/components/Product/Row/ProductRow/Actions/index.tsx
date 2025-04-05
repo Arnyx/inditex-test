@@ -1,6 +1,6 @@
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
-import ExtensionIcon from "@mui/icons-material/Extension";
+import ExtensionOutlinedIcon from "@mui/icons-material/ExtensionOutlined";
 import { Box, IconButton, Popover } from "@mui/material";
 import { HTMLAttributes, useState } from "react";
 import { TemplateSelection } from "../TemplateSelection";
@@ -60,7 +60,7 @@ export const ProductRowActions = ({
           className={styles.actions__button}
           onClick={handleTemplatePopoverOpen}
         >
-          <ExtensionIcon />
+          <ExtensionOutlinedIcon />
         </IconButton>
         <span {...dragHandleProps}>
           <IconButton

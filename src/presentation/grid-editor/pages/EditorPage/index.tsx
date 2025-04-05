@@ -12,7 +12,7 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { Box, LinearProgress, Typography } from "@mui/material";
+import { Box, LinearProgress } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
 import { AddRowPlaceholder } from "../../components/Product/Row/AddRowPlaceholder";
 import { useGridEditor } from "../../hooks/useGridEditor";
@@ -26,6 +26,7 @@ import { useTemplates } from "../../hooks/useTemplates";
 import { useSnackbarStore } from "@/presentation/shared/store/snackbarStore";
 import { useEffect, useMemo, useRef } from "react";
 import { createInditexRepository } from "@/infraestructure/factories/inditexRepositoryFactory";
+import logo from "/images/zara.svg";
 
 const NO_PRODUCTS_MESSAGE_CLOSE_TIME = 10000; // 10 seconds
 
@@ -82,8 +83,8 @@ export const EditorPage = () => {
 
   return (
     <Box className={styles["editor-page"]}>
-      <Box className={styles["editor-page__title"]}>
-        <Typography variant="h4">Editor de Parrillas</Typography>
+      <Box className={styles["editor-page__header"]}>
+        <img src={logo} alt="Icon" className={styles["editor-page__logo"]} />
       </Box>
 
       {isLoading ? (

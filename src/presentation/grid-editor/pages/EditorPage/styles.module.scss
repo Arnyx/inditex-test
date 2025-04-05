@@ -1,8 +1,12 @@
 .editor-page {
   margin: spacing(5) 0;
 
-  &__title {
+  &__header {
     margin-bottom: spacing(5);
+  }
+
+  &__logo {
+    width: 200px;
   }
 
   &__loader {
