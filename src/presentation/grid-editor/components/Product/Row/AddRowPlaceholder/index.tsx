@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import styles from "./styles.module.scss";
-import AddCircleTwoToneIcon from "@mui/icons-material/AddCircleTwoTone";
+import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 
 type Props = {
   onClick: () => void;
@@ -8,11 +8,13 @@ type Props = {
 
 export const AddRowPlaceholder = ({ onClick }: Props) => {
   return (
-    <Box className={styles.placeholder} onClick={onClick}>
-      <AddCircleTwoToneIcon className={styles.placeholder__icon} />
-      <Typography variant="body1" className={styles.placeholder__text}>
-        Add new row
-      </Typography>
+    <Box className={styles.placeholder}>
+      <Box className={styles.placeholder__wrapper} onClick={onClick}>
+        <AddCircleOutlineOutlinedIcon className={styles.placeholder__icon} />
+        <Typography className={styles.placeholder__text}>
+          Add new row
+        </Typography>
+      </Box>
     </Box>
   );
 };

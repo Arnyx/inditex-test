@@ -1,5 +1,7 @@
-import type { ProductRow } from "@/domain/models/ProductRow";
+import type { Product } from "@/domain/models/Product";
 
-export type DraftProductRow = Omit<ProductRow, "templateId"> & {
+export interface DraftProductRow {
+  id: string;
   templateId?: string;
-};
+  products: Array<Product>;
+}

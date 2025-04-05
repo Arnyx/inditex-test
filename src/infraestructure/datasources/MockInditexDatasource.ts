@@ -22,7 +22,7 @@ export class MockInditexDatasource implements InditexDatasource {
   }
 
   async saveGrid(grid: Grid): Promise<void> {
-    console.log(grid);
-    return;
+    console.log("Grid saved", grid);
+    await new Promise((res) => setTimeout(res, 1000));
   }
 }

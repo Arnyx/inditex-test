@@ -1,7 +1,9 @@
 .actions {
   position: fixed;
-  bottom: spacing(5);
-  right: spacing(5);
+  bottom: spacing(12);
   display: flex;
   gap: spacing(2);
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: 4;
 }

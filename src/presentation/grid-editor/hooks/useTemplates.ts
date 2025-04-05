@@ -1,10 +1,8 @@
 import { Template } from "@/domain/models/Template";
-import { createInditexRepository } from "@/infraestructure/factories/inditexRepositoryFactory";
+import { InditexRepositoryImpl } from "@/infraestructure/repositories/InditexRepositoryImpl";
 import { useQuery } from "@tanstack/react-query";
 
-const repository = createInditexRepository();
-
-export const useTemplates = () => {
+export const useTemplates = (repository: InditexRepositoryImpl) => {
   return useQuery<Array<Template>>({
     queryKey: ["templates"],
     queryFn: () => repository.getTemplates(),

@@ -12,13 +12,38 @@ import type {
 } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import { DraftProductRow } from "../models/DraftProductRow";
+import { useMutation } from "@tanstack/react-query";
+import { InditexRepositoryImpl } from "@/infraestructure/repositories/InditexRepositoryImpl";
+import { ProductRow } from "@/domain/models/ProductRow";
+import { useSnackbarStore } from "@/presentation/shared/store/snackbarStore";
+import { mapDraftToDomain } from "../mappers/toDomainGrid";
 
-export const useGridEditor = (products: Array<Product> | undefined) => {
+export const useGridEditor = (
+  repository: InditexRepositoryImpl,
+  products: Array<Product> | undefined
+) => {
   const [rows, setRows] = useState<Array<DraftProductRow>>([]);
   const [draggedRow, setDraggedRow] = useState<DraftProductRow | null>(null);
   const [draggedProduct, setDraggedProduct] = useState<Product | null>(null);
   const [overProductId, setOverProductId] = useState<string | null>(null);
+  const { addSnackbar } = useSnackbarStore();
   const lastRowId = useRef(0);
+
+  const { mutate: save, isPending: isSaving } = useMutation({
+    mutationFn: (grid: Array<ProductRow>) => repository.saveGrid(grid),
+    onSuccess: () => {
+      addSnackbar({
+        message: "Grid saved successfully",
+        type: "success",
+      });
+    },
+    onError: (error) => {
+      addSnackbar({
+        message: error.message || "Error saving grid",
+        type: "error",
+      });
+    },
+  });
 
   useEffect(() => {
     if (!products) return;
@@ -178,16 +203,40 @@ export const useGridEditor = (products: Array<Product> | undefined) => {
     );
   };
 
+  const handleSave = () => {
+    if (rows.some((row) => !row.templateId)) {
+      addSnackbar({
+        message: "All rows must have a template",
+        type: "error",
+      });
+
+      return;
+    }
+
+    if (rows.some((row) => !row.products.length)) {
+      addSnackbar({
+        message: "All rows must have at least one product",
+        type: "error",
+      });
+
+      return;
+    }
+
+    save(mapDraftToDomain(rows));
+  };
+
   return {
     rows,
     draggedRow,
     draggedProduct,
     overProductId,
+    isSaving,
     handleDragOver,
     handleDragStart,
     handleDragEnd,
     handleAddRow,
     handleDeleteRow,
     handleTemplateChange,
+    handleSave,
   };
 };

@@ -1,28 +1,31 @@
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import ZoomOutIcon from "@mui/icons-material/ZoomOut";
-import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { Box, Fab } from "@mui/material";
 import styles from "./styles.module.scss";
+import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 
 type Props = {
   isMinZoom: boolean;
   isMaxZoom: boolean;
+  isSaving: boolean;
   onZoomIn: () => void;
   onZoomOut: () => void;
-  onReset: () => void;
+  onSave: () => void;
 };
 
 export const GridEditorActions = ({
   isMinZoom,
   isMaxZoom,
+  isSaving,
   onZoomIn,
   onZoomOut,
-  onReset,
+  onSave,
 }: Props) => {
   return (
     <Box className={styles.actions}>
       <Fab
         color="secondary"
+        size="medium"
         aria-label="add"
         onClick={onZoomOut}
         disabled={isMinZoom}
@@ -31,14 +34,15 @@ export const GridEditorActions = ({
       </Fab>
       <Fab
         color="secondary"
+        size="medium"
         aria-label="add"
         onClick={onZoomIn}
         disabled={isMaxZoom}
       >
         <ZoomInIcon />
       </Fab>
-      <Fab color="secondary" aria-label="add" onClick={onReset}>
-        <RestartAltIcon />
+      <Fab color="success" size="medium" disabled={isSaving} onClick={onSave}>
+        <SaveOutlinedIcon />
       </Fab>
     </Box>
   );

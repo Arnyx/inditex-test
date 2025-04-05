@@ -18,13 +18,10 @@ export const useZoom = () => {
       roundDecimals(Math.max(prev - ZOOM_STEP, MIN_ZOOM))
     );
 
-  const handleResetZoom = () => setCurrentZoom(MAX_ZOOM);
-
   return {
     currentZoom,
     handleZoomIn,
     handleZoomOut,
-    handleResetZoom,
     isMinZoom: currentZoom <= MIN_ZOOM,
     isMaxZoom: currentZoom >= MAX_ZOOM,
   };
