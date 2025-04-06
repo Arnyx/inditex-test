@@ -38,8 +38,12 @@ export const EditorPage = () => {
 
   return (
     <Box className={styles["editor-page"]}>
-      <Box className={styles["editor-page__header"]}>
-        <img src={logo} alt="Icon" className={styles["editor-page__logo"]} />
+      <Box component="header" className={styles["editor-page__header"]}>
+        <img
+          src={logo}
+          alt="Zara logo"
+          className={styles["editor-page__logo"]}
+        />
       </Box>
 
       {isLoading ? (
@@ -49,8 +53,9 @@ export const EditorPage = () => {
         />
       ) : (
         <>
-          <Box className={styles["editor-page__body"]}>
+          <Box component="main" className={styles["editor-page__body"]}>
             <Box
+              component="section"
               className={styles["editor-page__rows"]}
               style={{ "--zoom-factor": currentZoom } as React.CSSProperties}
             >
