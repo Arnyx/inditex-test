@@ -93,7 +93,7 @@ npm run test:coverage
 
 ## Screenshots
 
-![Editor preview](./public/screenshot.png)
+![Editor preview](./public/images/screenshot.jpg)
 
 ---
 
