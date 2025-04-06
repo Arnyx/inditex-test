@@ -3,7 +3,7 @@ import { useSnackbarStore } from "@/presentation/shared/store/snackbarStore";
 import { useEffect, useRef } from "react";
 import { InditexRepositoryImpl } from "@/infraestructure/repositories/InditexRepositoryImpl";
 import { useQuery } from "@tanstack/react-query";
-import { Product } from "@/domain/models/Product";
+import type { Product } from "@/domain/models/Product";
 
 const NO_PRODUCTS_MESSAGE_CLOSE_TIME = 10000;
 

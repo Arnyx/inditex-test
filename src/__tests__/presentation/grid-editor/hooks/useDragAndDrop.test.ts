@@ -5,7 +5,7 @@ import type {
   DragOverEvent,
 } from "@dnd-kit/core";
 import { useDragAndDrop } from "@/presentation/grid-editor/hooks/useDragAndDrop";
-import { DraftProductRow } from "@/presentation/grid-editor/models/DraftProductRow";
+import type { DraftProductRow } from "@/presentation/grid-editor/models/DraftProductRow";
 import { MAX_PRODUCTS_ROW_LENGTH } from "@/config/constants";
 
 const mockRows: DraftProductRow[] = [

@@ -1,4 +1,4 @@
-import { Template } from "@/domain/models/Template";
+import type { Template } from "@/domain/models/Template";
 import { InditexRepositoryImpl } from "@/infraestructure/repositories/InditexRepositoryImpl";
 import { useQuery } from "@tanstack/react-query";
 

@@ -1,6 +1,5 @@
 import { renderHook } from "@testing-library/react";
 import { useGridEditor } from "@/presentation/grid-editor/hooks/useGridEditor";
-import { vi } from "vitest";
 
 vi.mock("@/presentation/grid-editor/hooks/useProducts", () => ({
   useProducts: () => ({ products: [], isLoading: false }),

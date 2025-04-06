@@ -1,5 +1,5 @@
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
-import { Product } from "@/domain/models/Product";
+import type { Product } from "@/domain/models/Product";
 import styles from "./Card.module.scss";
 
 type Props = {

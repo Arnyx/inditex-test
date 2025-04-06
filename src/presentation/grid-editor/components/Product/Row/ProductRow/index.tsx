@@ -1,12 +1,12 @@
-import { Template } from "@/domain/models/Template";
-import { DraftProductRow } from "@/presentation/grid-editor/models/DraftProductRow";
+import type { Template } from "@/domain/models/Template";
+import type { DraftProductRow } from "@/presentation/grid-editor/models/DraftProductRow";
 import { useDroppable } from "@dnd-kit/core";
 import {
   horizontalListSortingStrategy,
   SortableContext,
 } from "@dnd-kit/sortable";
 import { Box } from "@mui/material";
-import { HTMLAttributes, useMemo } from "react";
+import { type HTMLAttributes } from "react";
 import { SortableProductCard } from "../../Card/SortableProductCard";
 import { ProductRowActions } from "./Actions";
 import { useProductRowStyles } from "./hooks/useProductRowStyles";
@@ -34,17 +34,13 @@ export const ProductRow = ({
   onTemplateChange,
 }: Props) => {
   const { isOver, setNodeRef } = useDroppable({ id });
-
-  const selectedTemplate = useMemo(() => {
-    return templates?.find((template) => template.id === templateId);
-  }, [templates, templateId]);
-
   const { justifyContent, classNames } = useProductRowStyles({
     draggedRow,
     rowId: id,
     products,
     isOver,
-    selectedTemplate,
+    templates,
+    templateId,
   });
 
   return (

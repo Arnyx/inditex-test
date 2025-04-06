@@ -2,10 +2,10 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 import ExtensionOutlinedIcon from "@mui/icons-material/ExtensionOutlined";
 import { Box, IconButton, Popover } from "@mui/material";
-import { HTMLAttributes, useState } from "react";
+import { type HTMLAttributes, useState } from "react";
 import { TemplateSelection } from "../TemplateSelection";
 import styles from "./styles.module.scss";
-import { Template } from "@/domain/models/Template";
+import type { Template } from "@/domain/models/Template";
 
 type Props = {
   id: string;

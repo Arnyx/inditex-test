@@ -2,7 +2,7 @@ import { MAX_PRODUCTS_ROW_LENGTH } from "@/config/constants";
 import { Product } from "@/domain/models/Product";
 import { chunkArray } from "@/utils";
 import { useState, useRef, useEffect } from "react";
-import { DraftProductRow } from "../models/DraftProductRow";
+import type { DraftProductRow } from "../models/DraftProductRow";
 
 export const useRowsManager = (initialProducts: Product[] | undefined) => {
   const [rows, setRows] = useState<DraftProductRow[]>([]);

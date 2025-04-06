@@ -3,8 +3,8 @@ import { useSaveGrid } from "@/presentation/grid-editor/hooks/useSaveGrid";
 import { useSnackbarStore } from "@/presentation/shared/store/snackbarStore";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { InditexRepositoryImpl } from "@/infraestructure/repositories/InditexRepositoryImpl";
-import { DraftProductRow } from "@/presentation/grid-editor/models/DraftProductRow";
-import { vi, Mock } from "vitest";
+import type { DraftProductRow } from "@/presentation/grid-editor/models/DraftProductRow";
+import { Mock } from "vitest";
 
 vi.mock("@/presentation/shared/store/snackbarStore", () => ({
   useSnackbarStore: vi.fn(),

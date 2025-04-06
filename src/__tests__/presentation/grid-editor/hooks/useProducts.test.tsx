@@ -3,9 +3,9 @@ import { useProducts } from "@/presentation/grid-editor/hooks/useProducts";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useSnackbarStore } from "@/presentation/shared/store/snackbarStore";
 import { useSearchParams } from "react-router-dom";
-import { Product } from "@/domain/models/Product";
-import { Mock, vi } from "vitest";
+import type { Product } from "@/domain/models/Product";
 import { InditexRepositoryImpl } from "@/infraestructure/repositories/InditexRepositoryImpl";
+import type { Mock } from "vitest";
 
 vi.mock("react-router-dom", () => ({
   useSearchParams: vi.fn(),

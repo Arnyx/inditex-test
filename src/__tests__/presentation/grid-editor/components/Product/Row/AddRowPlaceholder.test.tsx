@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { AddRowPlaceholder } from "@/presentation/grid-editor/components/Product/Row/AddRowPlaceholder";
-import { vi } from "vitest";
 
 describe("AddRowPlaceholder", () => {
   it("renders the placeholder text", () => {

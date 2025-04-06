@@ -1,6 +1,12 @@
-import { Template } from "@/domain/models/Template";
-import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { SelectChangeEvent } from "node_modules/@mui/material";
+import type { Template } from "@/domain/models/Template";
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  type SelectChangeEvent,
+} from "@mui/material";
 
 type Props = {
   id: string;

@@ -1,6 +1,6 @@
 import { renderHook, act, waitFor } from "@testing-library/react";
 import { useRowsManager } from "@/presentation/grid-editor/hooks/useRowsManager";
-import { Product } from "@/domain/models/Product";
+import type { Product } from "@/domain/models/Product";
 import { MAX_PRODUCTS_ROW_LENGTH } from "@/config/constants";
 
 const createProduct = (id: string): Product => ({

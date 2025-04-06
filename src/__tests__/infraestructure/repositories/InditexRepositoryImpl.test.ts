@@ -1,8 +1,7 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
 import { InditexRepositoryImpl } from "@/infraestructure/repositories/InditexRepositoryImpl";
 import type { InditexDatasource } from "@/domain/datasources/InditexDatasource";
 import type { Grid } from "@/domain/models/Grid";
-import { Template, TemplateAlignment } from "@/domain/models/Template";
+import { type Template, TemplateAlignment } from "@/domain/models/Template";
 
 describe("InditexRepositoryImpl", () => {
   const mockDatasource: InditexDatasource = {

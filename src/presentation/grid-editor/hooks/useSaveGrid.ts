@@ -1,9 +1,9 @@
-import { ProductRow } from "@/domain/models/ProductRow";
+import type { ProductRow } from "@/domain/models/ProductRow";
 import { InditexRepositoryImpl } from "@/infraestructure/repositories/InditexRepositoryImpl";
 import { useSnackbarStore } from "@/presentation/shared/store/snackbarStore";
 import { useMutation } from "@tanstack/react-query";
 import { mapDraftToDomain } from "../mappers/mapDraftToDomain";
-import { DraftProductRow } from "../models/DraftProductRow";
+import type { DraftProductRow } from "../models/DraftProductRow";
 
 export const useSaveGrid = (
   rows: DraftProductRow[],

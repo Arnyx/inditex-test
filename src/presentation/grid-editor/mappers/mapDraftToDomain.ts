@@ -1,5 +1,5 @@
-import { DraftProductRow } from "../models/DraftProductRow";
-import { ProductRow } from "@/domain/models/ProductRow";
+import type { DraftProductRow } from "../models/DraftProductRow";
+import type { ProductRow } from "@/domain/models/ProductRow";
 
 export const mapDraftToDomain = (
   draftRows: Array<DraftProductRow>

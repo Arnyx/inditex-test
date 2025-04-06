@@ -1,21 +1,30 @@
-import { Template, TemplateAlignment } from "@/domain/models/Template";
+import { type Template, TemplateAlignment } from "@/domain/models/Template";
 import styles from "../styles.module.scss";
 import { MAX_PRODUCTS_ROW_LENGTH } from "@/config/constants";
 import { DraftProductRow } from "@/presentation/grid-editor/models/DraftProductRow";
+import { useMemo } from "react";
+
+type Props = {
+  draggedRow: DraftProductRow | null;
+  rowId: string;
+  products: DraftProductRow["products"];
+  isOver: boolean;
+  templates?: Array<Template>;
+  templateId?: string;
+};
 
 export const useProductRowStyles = ({
   draggedRow,
   rowId,
   products,
   isOver,
-  selectedTemplate,
-}: {
-  draggedRow: DraftProductRow | null;
-  rowId: string;
-  products: DraftProductRow["products"];
-  isOver: boolean;
-  selectedTemplate?: Template;
-}) => {
+  templates,
+  templateId,
+}: Props) => {
+  const selectedTemplate = useMemo(() => {
+    return templates?.find((template) => template.id === templateId);
+  }, [templates, templateId]);
+
   const isSourceRow = draggedRow?.id === rowId;
   const isBlocked = products.length === MAX_PRODUCTS_ROW_LENGTH;
 

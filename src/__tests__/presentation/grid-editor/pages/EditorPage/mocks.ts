@@ -1,4 +1,3 @@
-import { vi } from "vitest";
 import type { useGridEditor } from "@/presentation/grid-editor/hooks/useGridEditor";
 
 export const createMockGridEditor = (

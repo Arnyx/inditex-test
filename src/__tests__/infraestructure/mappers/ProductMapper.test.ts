@@ -1,6 +1,6 @@
 import { ProductMapper } from "@/infraestructure/mappers/ProductMapper";
 import type { ProductDTO } from "@/infraestructure/dtos/ProductDTO";
-import { Product } from "@/domain/models/Product";
+import type { Product } from "@/domain/models/Product";
 
 describe("ProductMapper", () => {
   const mockDto: ProductDTO = {

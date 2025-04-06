@@ -1,6 +1,6 @@
 import { TemplateMapper } from "@/infraestructure/mappers/TemplateMapper";
 import type { TemplateDTO } from "@/infraestructure/dtos/TemplateDTO";
-import { Template, TemplateAlignment } from "@/domain/models/Template";
+import { TemplateAlignment, type Template } from "@/domain/models/Template";
 
 describe("TemplateMapper", () => {
   const mockDto: TemplateDTO = {

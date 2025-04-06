@@ -1,5 +1,5 @@
 import type { Product } from "@/domain/models/Product";
-import { DraftProductRow } from "../../models/DraftProductRow";
+import type { DraftProductRow } from "../../models/DraftProductRow";
 import {
   MAX_PRODUCTS_ROW_LENGTH,
   MIN_PRODUCTS_ROW_LENGTH,

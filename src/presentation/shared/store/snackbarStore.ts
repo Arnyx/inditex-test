@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { create } from "zustand";
 
 type Snackbar = {
@@ -8,7 +8,7 @@ type Snackbar = {
 };
 
 type SnackbarStore = {
-  queue: Snackbar[];
+  queue: Array<Snackbar>;
   addSnackbar: (snackbar: Snackbar) => void;
   removeSnackbar: () => void;
 };

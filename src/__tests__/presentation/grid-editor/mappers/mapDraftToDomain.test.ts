@@ -1,5 +1,5 @@
 import { mapDraftToDomain } from "@/presentation/grid-editor/mappers/mapDraftToDomain";
-import { DraftProductRow } from "@/presentation/grid-editor/models/DraftProductRow";
+import type { DraftProductRow } from "@/presentation/grid-editor/models/DraftProductRow";
 
 describe("mapDraftToDomain", () => {
   it("maps DraftProductRow to ProductRow correctly", () => {

@@ -1,10 +1,10 @@
-import { describe, it, expect, vi, beforeEach, Mock } from "vitest";
+import type { Mock } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { useGridEditor } from "@/presentation/grid-editor/hooks/useGridEditor";
 import { EditorPage } from "@/presentation/grid-editor/pages/EditorPage";
 import { createMockGridEditor } from "./mocks";
 import userEvent from "@testing-library/user-event";
-import { DraftProductRow } from "@/presentation/grid-editor/models/DraftProductRow";
+import type { DraftProductRow } from "@/presentation/grid-editor/models/DraftProductRow";
 
 vi.mock(
   "@/presentation/grid-editor/components/Product/Row/SortableProductRow",
