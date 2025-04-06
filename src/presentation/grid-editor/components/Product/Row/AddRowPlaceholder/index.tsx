@@ -9,7 +9,12 @@ type Props = {
 export const AddRowPlaceholder = ({ onClick }: Props) => {
   return (
     <Box className={styles.placeholder}>
-      <Box className={styles.placeholder__wrapper} onClick={onClick}>
+      <Box
+        role="region"
+        aria-label="Add row"
+        className={styles.placeholder__wrapper}
+        onClick={onClick}
+      >
         <AddCircleOutlineOutlinedIcon className={styles.placeholder__icon} />
         <Typography className={styles.placeholder__text}>
           Add new row

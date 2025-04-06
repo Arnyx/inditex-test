@@ -25,7 +25,18 @@ export default defineConfig({
     include: ["**/__tests__/**/*.test.{ts,tsx}"],
     coverage: {
       reporter: ["text", "json", "html"],
-      exclude: ["node_modules/", "src/setupTests.ts"],
+      exclude: [
+        "node_modules/",
+        "src/setupTests.ts",
+        "src/main.tsx",
+        "src/vite-env.d.ts",
+        "src/config/theme.ts",
+        "eslint.config.js",
+        "vite.config.ts",
+        "src/__tests__/**/*",
+        "**/*.d.ts",
+        "**/mocks.ts",
+      ],
     },
   },
 });
