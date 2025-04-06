@@ -22,7 +22,6 @@ export const ProductCard = ({
   return (
     <Card
       className={`${styles.card} ${overlayClassName} ${smallZoomClassName}`}
-      elevation={0}
       variant="outlined"
     >
       <CardMedia

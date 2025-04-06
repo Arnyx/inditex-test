@@ -23,7 +23,7 @@
   }
 
   &__content {
-    padding: calc(spacing(1) * var(--zoom-factor));
+    padding: calc(spacing(2) * var(--zoom-factor)) !important;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -53,7 +53,8 @@
   &--small-zoom {
     .card {
       &__image {
-        height: calc($product-image-height);
+        height: 100%;
+        padding-bottom: calc(spacing(2) * var(--zoom-factor));
       }
 
       &__content {
