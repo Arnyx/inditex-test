@@ -1,6 +1,7 @@
 import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 import type { Product } from "@/domain/models/Product";
 import styles from "./Card.module.scss";
+import { formatPrice } from "@/utils";
 
 type Props = {
   product: Product;
@@ -33,7 +34,7 @@ export const ProductCard = ({
       <CardContent className={styles.card__content}>
         <Typography className={styles.card__name}>{product.name}</Typography>
         <Typography className={styles.card__price}>
-          {product.price.toFixed(2)} EUR
+          {formatPrice(product.price)}
         </Typography>
       </CardContent>
     </Card>
