@@ -7,10 +7,15 @@ import { DraftProductRow } from "../models/DraftProductRow";
 export const useRowsManager = (initialProducts: Product[] | undefined) => {
   const [rows, setRows] = useState<DraftProductRow[]>([]);
   const lastRowId = useRef(0);
+  const initialized = useRef(false);
 
   useEffect(() => {
-    if (!initialProducts) return;
+    const isValidProductArray =
+      Array.isArray(initialProducts) && initialProducts.length > 0;
 
+    if (initialized.current || !isValidProductArray) return;
+
+    initialized.current = true;
     const chunked = chunkArray(initialProducts, MAX_PRODUCTS_ROW_LENGTH).map(
       (group, index) => ({
         id: `row-${index}`,
@@ -20,7 +25,7 @@ export const useRowsManager = (initialProducts: Product[] | undefined) => {
 
     lastRowId.current += chunked.length;
     setRows(chunked);
-  }, [initialProducts]);
+  }, [initialProducts, rows]);
 
   const addRow = () => {
     const newRow = { id: `row-${lastRowId.current}`, products: [] };

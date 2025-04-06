@@ -2,13 +2,13 @@ import { renderHook, act } from "@testing-library/react";
 import { useZoom } from "@/presentation/grid-editor/hooks/useZoom";
 import { MAX_ZOOM, MIN_ZOOM, ZOOM_STEP } from "@/config/constants";
 
-describe.skip("useZoom", () => {
-  test("starts at max zoom", () => {
+describe("useZoom", () => {
+  it("should start at max zoom", () => {
     const { result } = renderHook(() => useZoom());
     expect(result.current.currentZoom).toBe(MAX_ZOOM);
   });
 
-  test("zooms out correctly", () => {
+  it("should zoom out correctly", () => {
     const { result } = renderHook(() => useZoom());
 
     act(() => {

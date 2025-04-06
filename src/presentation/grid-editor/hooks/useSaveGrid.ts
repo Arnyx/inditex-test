@@ -2,7 +2,7 @@ import { ProductRow } from "@/domain/models/ProductRow";
 import { InditexRepositoryImpl } from "@/infraestructure/repositories/InditexRepositoryImpl";
 import { useSnackbarStore } from "@/presentation/shared/store/snackbarStore";
 import { useMutation } from "@tanstack/react-query";
-import { mapDraftToDomain } from "../mappers/toDomainGrid";
+import { mapDraftToDomain } from "../mappers/mapDraftToDomain";
 import { DraftProductRow } from "../models/DraftProductRow";
 
 export const useSaveGrid = (
@@ -33,7 +33,7 @@ export const useSaveGrid = (
       return;
     }
 
-    if (rows.some((row) => row.products.length === 0)) {
+    if (rows.some((row) => !row.products.length)) {
       addSnackbar({
         message: "All rows must have at least one product",
         type: "error",
