@@ -25,7 +25,7 @@ Editor visual de productos y plantillas en una cuadrícula dinámica. Permite ar
 ```
 src/
 ├── domain/
-│   ├── models/             # Tipos del dominio (Product, Template, ProductRow)
+│   ├── models/             # Tipos del dominio
 │   ├── datasources/        # Interfaces de datasource
 │   └── repositories/       # Interfaces de repositorios
 ├── infraestructure/
@@ -35,10 +35,10 @@ src/
 │   └── repositories/       # Implementación de repositorio
 ├── presentation/
 │   ├── grid-editor/
-│   │   ├── components/     # UI modular (Card, Row, Actions, etc.)
-│   │   ├── hooks/          # Hooks para manejar lógica de negocio
-│   │   ├── models/         # Modelos internos como DraftProductRow
-│   │   ├── mappers/        # Mapper para guardar productos
+│   │   ├── components/     # Componentes del grid
+│   │   ├── hooks/          # Hooks para manejar la lógica
+│   │   ├── models/         # Modelos internos usados en componentes
+│   │   ├── mappers/        # Mapper para la comunicación con el dominio
 │   │   └── pages/          # Página principal del editor
 │   └── shared/             # Componentes y stores comunes
 ├── utils/                  # Utilidades
